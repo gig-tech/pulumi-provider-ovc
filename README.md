@@ -1,3 +1,5 @@
+# NOTE: This project in an experimental stage and has a very low priority at this time!
+
 # Terraform Bridge Provider Boilerplate
 
 This repository contains boilerplate code for building a new Pulumi provider which wraps an existing
