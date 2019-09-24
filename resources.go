@@ -17,12 +17,12 @@ package ovc
 import (
 	"unicode"
 
+	"github.com/gig-tech/terraform-provider-ovc/ovc"
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
 	"github.com/pulumi/pulumi-terraform/pkg/tfbridge"
 	"github.com/pulumi/pulumi/pkg/resource"
 	"github.com/pulumi/pulumi/pkg/tokens"
-	"github.com/terraform-providers/terraform-provider-ovc/ovc"
 )
 
 // all of the token components used below.
@@ -98,37 +98,34 @@ func Provider() tfbridge.ProviderInfo {
 		License:     "Apache-2.0",
 		Homepage:    "https://pulumi.io",
 		Repository:  "https://github.comgig-tech/pulumi-provider-ovc",
-		Config:      map[string]*tfbridge.SchemaInfo{
+		Config: map[string]*tfbridge.SchemaInfo{
 			"server_url": {
 				Default: &tfbridge.DefaultInfo{
-					EnvVars: []string{"OVC_URL"}
-				}
+					EnvVars: []string{"OVC_URL"},
+				},
 			},
 			"client_jwt": {
 				Default: &tfbridge.DefaultInfo{
-					EnvVars: []string{"OVC_JWT"}
-				}
+					EnvVars: []string{"OVC_JWT"},
+				},
 			},
 		},
 		PreConfigureCallback: preConfigureCallback,
-		Resources:            map[string]*tfbridge.ResourceInfo{
-			// Map each resource in the Terraform provider to a Pulumi type. Two examples
-			// are below - the single line form is the common case. The multi-line form is
-			// needed only if you wish to override types or other default options.
-			//
-			// "aws_iam_role": {Tok: makeResource(mainMod, "IamRole")}
-			//
-			// "aws_acm_certificate": {
-			// 	Tok: makeResource(mainMod, "Certificate"),
-			// 	Fields: map[string]*tfbridge.SchemaInfo{
-			// 		"tags": {Type: makeType(mainPkg, "Tags")},
-			// 	},
-			// },
+		Resources: map[string]*tfbridge.ResourceInfo{
+			"account":           {Tok: makeResource(mainMod, "Account")},
+			"cloudspace":        {Tok: makeResource(mainMod, "Cloudspace")},
+			"external_networks": {Tok: makeResource(mainMod, "ExternalNetworks")},
+			"forwarding": {Tok: makeResource(mainMod, "Forwarding")},
+			"images": {Tok: makeResource(mainMod, "Images")},
+			"ipsec": {Tok: makeResource(mainMod, "Ipsec")},
+			"locations": {Tok: makeResource(mainMod, "Location")},
+			"machines": {Tok: makeResource(mainMod, "Machines")},
+			"sizes": {Tok: makeResource(mainMod, "Sizes")},
 		},
 		DataSources: map[string]*tfbridge.DataSourceInfo{
-			// Map each resource in the Terraform provider to a Pulumi function. An example
-			// is below.
-			// "aws_ami": {Tok: makeDataSource(mainMod, "getAmi")},
+		// Map each resource in the Terraform provider to a Pulumi function. An example
+		// is below.
+		// "aws_ami": {Tok: makeDataSource(mainMod, "getAmi")},
 		},
 		JavaScript: &tfbridge.JavaScriptInfo{
 			// List any npm dependencies and their versions
